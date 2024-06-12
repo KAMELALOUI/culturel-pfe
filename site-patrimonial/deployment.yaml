@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: patrimonial-deployment
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: patrimonial-deployment
+  template:
+    metadata:
+      labels:
+        app: patrimonial-deployment
+    spec:
+      containers:
+        - name: patrimonial-deployment
+          image: site-patrimonial-service
+          ports:
+            - containerPort: 80

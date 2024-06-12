@@ -1,0 +1,79 @@
+<app-header></app-header>
+
+<main class="main">
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero section">
+    <img src="assets/img/Tunisie_Tozeur.jpg" alt="" joke="fade-in">
+    <div class="container">
+      <h2 joke="fade-up" joke-delay="100">Plateforme de Préservation et de Promotion du Patrimoine Culturel</h2>
+      <p joke="fade-up" joke-delay="200">Ce projet vise à développer une plateforme complète pour la préservation du patrimoine culturel et la gestion des événements culturels</p>
+      <div class="d-flex mt-4" joke="fade-up" joke-delay="300">
+        <a href="" class="btn-get-started">Get Started</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Courses Section -->
+  <section id="courses" class="courses section">
+    <div class="container section-title" joke="fade-up">
+      <!-- Title can be added here if needed -->
+    </div>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-sm-8">
+
+          <h2>Education et Sensibilisation</h2>
+          <div class="row">
+            <div class="col-md-4" *ngFor="let item of media | paginate: { itemsPerPage: 3, currentPage: mediaPage }">
+              <div class="card mb-4 box-shadow card-custom">
+                <img class="card-img-top" [src]="item.imageURL && item.imageURL.trim() ? item.imageURL : 'assets/img/festivale.jpg'" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">{{ item.createdAt | date:'medium' }}</p>
+                  <h5 class="card-title">{{ item.title }}</h5>
+                  <p class="card-text">{{ item.content }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <pagination-controls (pageChange)="mediaPage = $event"></pagination-controls>
+
+          <h2>Event culturels</h2>
+          <div class="row">
+            <div class="col-md-4" *ngFor="let item of mappings | paginate: { itemsPerPage: 3, currentPage: mappingsPage }">
+              <div class="card mb-4 box-shadow card-custom">
+                <img class="card-img-top" [src]="item.imageURL && item.imageURL.trim() ? item.imageURL : 'assets/img/festivale.jpg'" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">{{ item.createdAt | date:'medium' }}</p>
+                  <p class="card-text">{{ item.location }}</p>
+                  <h5 class="card-title">{{ item.name }}</h5>
+                  <p class="card-text">{{ item.description }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <pagination-controls (pageChange)="mappingsPage = $event"></pagination-controls>
+
+          <h2>Sites Patrimoniaux</h2>
+          <div class="row">
+            <div class="col-md-4" *ngFor="let item of sites | paginate: { itemsPerPage: 3, currentPage: sitesPage }">
+              <div class="card mb-4 box-shadow card-custom">
+                <img class="card-img-top" [src]="item.imageURL && item.imageURL.trim() ? item.imageURL : 'assets/img/dz.jpg'" alt="Card image cap">
+                <div class="card-body">
+                  <p class="card-text">{{ item.createdAt | date:'medium' }}</p>
+                  <p class="card-text">{{ item.localisation }}</p>
+                  <h5 class="card-title">{{ item.nom }}</h5>
+                  <p class="card-text">{{ item.descriptionHistorique }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <pagination-controls (pageChange)="sitesPage = $event"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<app-footer></app-footer>

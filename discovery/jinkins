@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_REGISTRY = 'your-docker-registry'
+        IMAGE_NAME = 'your-image-name'
+        TAG = 'latest'
+        KUBE_NAMESPACE = 'your-kubernetes-namespace'
+        KUBE_DEPLOYMENT = 'mapping-deployment'
+        KUBE_SERVICE = 'media-k8s-service'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    // Build the Docker image
+                    sh "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${TAG} ."
+                }
+            }
+        }
+
+        stage('Push to Docker Registry') {
+            steps {
+                script {
+                    // Push the Docker image to the registry
+                    sh "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${TAG}"
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    // Apply Kubernetes deployment configuration
+                    sh "kubectl apply -f mapping-deployment.yaml --namespace=${KUBE_NAMESPACE}"
+                    // Apply Kubernetes service configuration
+                    sh "kubectl apply -f media-k8s-service.yaml --namespace=${KUBE_NAMESPACE}"
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Clean up: delete the Docker image from the local machine
+            sh "docker rmi ${DOCKER_REGISTRY}/${IMAGE_NAME}:${TAG}"
+        }
+    }
+}

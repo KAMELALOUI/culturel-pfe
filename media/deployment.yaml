@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mapping-deployment
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mapping-deployment
+  template:
+    metadata:
+      labels:
+        app: mapping-deployment
+    spec:
+      containers:
+        - name: mapping-service
+          image: mapping-service
+          ports:
+            - containerPort: 80

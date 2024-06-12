@@ -1,0 +1,51 @@
+<app-header></app-header>
+
+
+
+<main class="main container">
+    
+
+    <div class="row mt-5 justify-content-center mb-5">
+        <div class="col-12 col-sm-8">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Publish a new article</h3>
+                    <p>
+                        use our services to publish a new story about a region that your love.
+                    </p>
+                    <form [formGroup]="form" (ngSubmit)="publish()" >
+                        <div class="mb-3">
+                            <label for="">Photo </label>
+                            <input type="file" accept="image/*" class="form-control" formControlName="photo" (change)="getPhoto($event)" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="">Title</label>
+                            <input type="text" class="form-control" formControlName="title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="">Descreption </label>
+                            <textarea type="password" class="form-control" formControlName="descreption" rows="10"></textarea>
+                        </div> 
+                        <div class="mb-3">
+                           <button class="btn btn-success w-100" [disabled]=" ! form.valid">Publish</button>
+                        </div>
+
+                        <div class="alert alert-danger" *ngIf="error != '' ">
+                            {{ error }}
+                        </div>
+
+                        <div class="alert alert-success" *ngIf="success != '' ">
+                            {{ success }}
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+</main>
+
+
+<app-footer></app-footer>

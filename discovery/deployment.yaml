@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-deployment
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: media-deployment
+  template:
+    metadata:
+      labels:
+        app: media-deployment
+    spec:
+      containers:
+        - name: media-service
+          image: media-service-image
+          ports:
+            - containerPort: 80

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: articles-deployment
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: articles-deployment
+  template:
+    metadata:
+      labels:
+        app: articles-deployment
+    spec:
+      containers:
+        - name: articles-services
+          image: articles-services
+          ports:
+            - containerPort: 80

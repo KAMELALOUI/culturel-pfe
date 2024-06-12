@@ -1,0 +1,45 @@
+<app-header></app-header>
+
+
+
+<main class="main container">
+    
+
+    <div class="row mt-5 justify-content-center mb-5">
+        <div class="col-12 col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <form [formGroup]="form" (ngSubmit)="auth()" >
+                        <div class="mb-3">
+                            <label for="">Username</label>
+                            <input type="text" class="form-control" formControlName="username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="">Password</label>
+                            <input type="password" class="form-control" formControlName="password">
+                        </div>
+                        <div class="mb-3">
+                            <p class="text-muted">
+                                You don't have an acount ? <a routerLink="/create-account">create one now</a>
+                            </p>
+                        </div>
+                        <div class="mb-3">
+                           <button class="btn btn-success" [disabled]=" ! form.valid">Connect</button>
+                        </div>
+
+                        <div class="alert alert-danger" *ngIf="error != '' ">
+                            {{ error }}
+                        </div>
+                        
+                        
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+</main>
+
+
+<app-footer></app-footer>

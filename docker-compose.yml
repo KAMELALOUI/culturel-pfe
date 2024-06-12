@@ -1,0 +1,88 @@
+version: '2.2'
+
+services:
+
+  auth:
+    image: kamelaloui/auth:1.0
+    container_name: auth
+    ports:
+      - "8088:8088"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://kamel.c3ccptog3srk.us-east-1.rds.amazonaws.com:3306/Kamel_db?createDatabaseIfNotExist=true&useSSL=true
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: TR45zd34vZ
+    cpus: "0.2"
+    mem_limit: "250M"
+    depends_on:
+      - discovery
+
+  discovery:
+    image: kamelaloui/discovery:1.0
+    container_name: discovery
+    ports:
+      - "8761:8761"
+    cpus: "0.2"
+    mem_limit: "250M"
+
+  front:
+    image: kamelaloui/front:1.0
+    container_name: front
+    ports:
+      - "80:80"
+    cpus: "0.2"
+    mem_limit: "250M"
+
+  gateway:
+    image: kamelaloui/gateway:1.0
+    container_name: gateway
+    ports:
+      - "8222:8222"
+    cpus: "0.2"
+    mem_limit: "250M"
+    depends_on:
+      - discovery
+  mapping:
+    image: kamelaloui/mapping:1.0
+    container_name: mapping
+    ports:
+      - "8087:8087"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://kamel.c3ccptog3srk.us-east-1.rds.amazonaws.com:3306/Kamel_db?createDatabaseIfNotExist=true&useSSL=true
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: TR45zd34vZ
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://discovery:8761/eureka/
+      SPRING_MVC_CORS_ALLOWED_ORIGINS: http://localhost:80
+    cpus: "0.2"
+    mem_limit: "250M"
+    depends_on:
+    - discovery
+  media:
+    image: kamelaloui/media:1.0
+    container_name: media
+    ports:
+      - "8086:8086"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://kamel.c3ccptog3srk.us-east-1.rds.amazonaws.com:3306/Kamel_db?createDatabaseIfNotExist=true&useSSL=true
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: TR45zd34vZ
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://discovery:8761/eureka/
+      SPRING_MVC_CORS_ALLOWED_ORIGINS: http://localhost:80
+    cpus: "0.2"
+    mem_limit: "250M"
+    depends_on:
+    - discovery
+  site:
+    image: kamelaloui/site:1.0
+    container_name: site
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://kamel.c3ccptog3srk.us-east-1.rds.amazonaws.com:3306/Kamel_db?createDatabaseIfNotExist=true&useSSL=true
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: TR45zd34vZ
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://discovery:8761/eureka/
+      SPRING_MVC_CORS_ALLOWED_ORIGINS: http://localhost:80      
+    cpus: "0.2"
+    mem_limit: "250M"
+    depends_on:
+    - discovery
